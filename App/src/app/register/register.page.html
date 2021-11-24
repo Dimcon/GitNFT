@@ -30,10 +30,10 @@
             </ion-item>
           </div>
           <div padding>
-            <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block">Register</ion-button>
+            <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block" (click)="registerUser()">Register</ion-button>
           </div>
           <div padding>
-            <ion-button  size="large" type="submit" expand="block">Login</ion-button>
+            <ion-button  size="large" type="submit" expand="block" (click)="goToLogin()">Login</ion-button>
           </div>
         </ion-col>
       </ion-row>

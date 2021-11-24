@@ -14,6 +14,13 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
+  registerUser(){
+    this.router.navigateByUrl('dashboard');
+  }
+
+  goToLogin(){
+    this.router.navigateByUrl('login');
+  }
   /*register(form){
     this.authService.register(form.value).subscribe((res) =>{
       this.router.navigateByUrl('home');

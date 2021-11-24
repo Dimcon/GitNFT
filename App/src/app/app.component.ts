@@ -16,28 +16,23 @@ export class AppComponent {
   Pages = [
     {
       title: 'Dashboard',
-      url: '',
-      icon: 'albums'
-    },
-    {
-      title: 'Login',
-      url: '/login',
-      icon: 'person'
-    },
-    {
-      title: 'Register',
-      url: '/register',
-      icon: 'person'
+      url: '/dashboard',
+      icon: 'apps'
     },
     {
       title: 'Git',
       url: '/gits',
-      icon: 'albums'
+      icon: 'logo-github'
     },
     {
       title: 'NFT',
       url: '/nfts',
-      icon: 'albums'
+      icon: 'logo-web-component'
+    },
+    {
+      title: 'Logout',
+      url: '/login',
+      icon: 'person'
     }
   ];
   constructor(
