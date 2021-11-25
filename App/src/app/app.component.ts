@@ -12,7 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 export class AppComponent {
 
   activePageTitle = 'Dashboard';
-
+  
   Pages = [
     {
       title: 'Dashboard',
@@ -20,7 +20,7 @@ export class AppComponent {
       icon: 'apps'
     },
     {
-      title: 'Git',
+      title: 'Repos',
       url: '/gits',
       icon: 'logo-github'
     },
@@ -35,6 +35,7 @@ export class AppComponent {
       icon: 'person'
     }
   ];
+
   constructor(
     private platform: Platform,
     private statusbar: StatusBar,
