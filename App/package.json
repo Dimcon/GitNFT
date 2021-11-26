@@ -31,6 +31,7 @@
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "ionic": "^5.4.16",
     "ionicons": "^6.0.0",
+    "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"

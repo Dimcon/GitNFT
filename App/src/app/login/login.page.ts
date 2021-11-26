@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-//import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
+import { UtilityServiceService } from '../services/utility-service.service';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +11,27 @@ import { Router } from "@angular/router";
 })
 export class LoginPage implements OnInit {
 
-  constructor(/*private authService: AuthService*/ private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private utilService: UtilityServiceService, 
+    private router: Router) { }
+
+    username=''
+    password=''
+    error: any=null;
 
   ngOnInit() {
   }
 
-  loginUser(){
-    this.router.navigateByUrl('dashboard');
+  async loginUser(): Promise<void> {
+    this.error = null;
+    try{
+      await this.authService.login(this.username, this.password)
+      await this.router.navigateByUrl('dashboard')
+    }catch(err){
+      this.error = err
+    }
+    
   }
 
   goToRegistration(){
