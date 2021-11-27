@@ -29,3 +29,8 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+/App/android/
+/App/www/
+/App/.idea/
+/Server/.vscode/
+/App/node_modules/

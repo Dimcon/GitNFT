@@ -1,7 +1,5 @@
 // This is going to all of our users routes
 
-
-
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
@@ -13,7 +11,7 @@ const Post = require("../models/post");
 
 
 // Routes to handle posts. GET and POST
-// Submit new psots
+// Submit new posts
 router.post("/newPost",
     passport.authenticate("jwt", { session: false }),
     (req, res, next) => {
