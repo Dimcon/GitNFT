@@ -3,15 +3,14 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
 
-    <ion-menu contentId="main-content" type="overlay" class=".ion-menu">
+    <ion-menu contentId="main-content" type="overlay" class=".ion-menu" side="end">
 
       <ion-content>
 
         <ion-list id="inbox-list">
-          <ion-list-header class=".ion-text-center"> Welcome to GitNFT!</ion-list-header>
-          <ion-note class=".ion-text-center">GitHub and NFT client</ion-note>
+          <ion-list-header class=".ion-text-center"> <h3>GitNFT</h3></ion-list-header>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let pages of Pages; let i = index">
+          <ion-menu-toggle auto-hide="true" *ngFor="let pages of Pages; let i = index">
             <ion-item (click)="activeIndex = i" routerDirection="root" [routerLink]="[pages.url]" lines="none"
               detail="false" [class.selected]= "activeIndex == i">
               <ion-icon slot="start" [ios]="pages.icon" [md]="pages.icon"></ion-icon>
