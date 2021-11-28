@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
-import { Platform } from '@ionic/angular';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import {Platform} from '@ionic/angular';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,10 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 })
 export class AppComponent {
 
+  activeIndex = 1;
+
   activePageTitle = 'Dashboard';
-  
-  Pages = [
+  pages = [
     {
       title: 'Dashboard',
       url: '/dashboard',
@@ -40,15 +42,26 @@ export class AppComponent {
     private platform: Platform,
     private statusbar: StatusBar,
     private splashscreen: SplashScreen,
+    private authService: AuthService,
   ) {
     this.initializeApp();
   }
 
-  initializeApp(){
+  initializeApp() {
     this.platform.ready().then(() => {
       this.statusbar.styleDefault();
       this.splashscreen.hide();
     });
   }
-  
+
+  async click(index, page: any) {
+    if (page.title === 'Logout') {
+      await this.logout();
+    }
+    this.activeIndex = index;
+  }
+
+  async logout() {
+    await this.authService.logout()
+  }
 }
