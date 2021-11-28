@@ -10,11 +10,11 @@
         <ion-list id="inbox-list">
           <ion-list-header class=".ion-text-center"> <h3>GitNFT</h3></ion-list-header>
 
-          <ion-menu-toggle auto-hide="true" *ngFor="let pages of Pages; let i = index">
-            <ion-item (click)="activeIndex = i" routerDirection="root" [routerLink]="[pages.url]" lines="none"
-              detail="false" [class.selected]= "activeIndex == i">
-              <ion-icon slot="start" [ios]="pages.icon" [md]="pages.icon"></ion-icon>
-              <ion-label>{{ pages.title }}</ion-label>
+          <ion-menu-toggle auto-hide="true" *ngFor="let page of pages; let i = index">
+            <ion-item (click)="click(i, page)" routerDirection="root" [routerLink]="[page.url]" lines="none"
+              detail="false" [class.selected]= "activeIndex === i">
+              <ion-icon slot="start" [ios]="page.icon" [md]="page.icon"></ion-icon>
+              <ion-label>{{ page.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
