@@ -11,7 +11,7 @@ const csurf = require('csurf');
 const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const https = require('https')
+// const https = require('https')
 const config = require('./api/config/database');
 const helmet = require("helmet")
 const morgan = require("morgan")
@@ -86,7 +86,7 @@ const posts = require('./api/routes/psots');
 app.use('/api/auth', users);
 app.use('/api/posts', posts);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 
 // Connect to mongoose database using our configs
@@ -99,13 +99,17 @@ mongoose.connection.on('error', (err) => {
     console.log('Database error ' + err);
 });
 
-https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-}, app).listen(port, '0.0.0.0',1, () => {
-    console.log('Server started on port: ' + port);
-});
 
-// app.listen(port, () => {
-//     console.log('Server started on port: ' + port);
-// });
+if (process.env.PORT) {
+    app.listen(port, () => {
+        console.log('Server started on port: ' + port);
+    });
+} else {
+    https.createServer({
+        key: fs.readFileSync('server.key'),
+        cert: fs.readFileSync('server.cert')
+    }, app).listen(port, () => {
+        console.log('Server started on port: ' + port);
+    });
+}
+
