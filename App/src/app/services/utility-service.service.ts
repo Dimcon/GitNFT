@@ -10,49 +10,50 @@ const baseUrl =environment.apiUrl
 })
 export class UtilityServiceService {
 
-  public user: any =null;
+  public repo: any =null;
+  public nft: any = null;
 
   constructor(
     private httpService: HttpServiceService,
   ) { }
 
-  async createRepo(text: string){
-    await this.httpService.post(baseUrl + '/gits/createRepo',{
-      userId: this.user.id,
-      text: text
+  async createRepo(repoName: string){
+    await this.httpService.post(baseUrl + '/addRepo',{
+      id: this.repo.id,
+      repoName: repoName
     })
   }
 
   async deleteRepo(repoId: string) {
-    await this.httpService.post(baseUrl + '/gits/deleteRepo',
+    await this.httpService.post(baseUrl + '/deleteRepo',
       {
-        userId: this.user.id,
-        postId: repoId
+        id: this.repo.id,
+        repoId: repoId
       })
   }
 
   async getRepos() {
-    const result = await this.httpService.get(baseUrl + '/gits/repos')
+    const result = await this.httpService.get(baseUrl + '/getRepos')
     return result
   }
 
-  async createNFT(text: string){
-    await this.httpService.post(baseUrl + '/nfts/createNFT',{
-      userId: this.user.id,
-      text: text
+  async createNFT(nftToken: string){
+    await this.httpService.post(baseUrl + '/addNFT',{
+      id: this.nft.id,
+      nftToken: nftToken
     })
   }
 
-  async deleteNFT(nftId: string) {
-    await this.httpService.post(baseUrl + '/nfts/deleteNFT',
+  async deleteNFT(nftToken: string) {
+    await this.httpService.post(baseUrl + '/deleteNFT',
       {
-        userId: this.user.id,
-        postId: nftId
+        id: this.nft.id,
+        nftToken: nftToken
       })
   }
 
   async getNFTs() {
-    const result = await this.httpService.get(baseUrl + '/nfts/NFTs')
+    const result = await this.httpService.get(baseUrl + '/getNFTs')
     return result
   }
 }
