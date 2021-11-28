@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://localhost:3000/",
+    "target": "https://gitnft-turiiz.codecapsules.co.za/",
     "secure": false,
     "changeOrigin": true
   }

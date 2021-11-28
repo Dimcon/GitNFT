@@ -102,7 +102,7 @@ mongoose.connection.on('error', (err) => {
 https.createServer({
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.cert')
-}, app).listen(port, () => {
+}, app).listen(port, '0.0.0.0',1, () => {
     console.log('Server started on port: ' + port);
 });
 
