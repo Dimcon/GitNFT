@@ -32,11 +32,11 @@ app.use(
 
 
 // Use all the middlewares we'll be needing.
-const corsOptions = {
-    origin: `http://localhost:4200`,
-    methods:['GET', 'PUT', 'POST', 'DELETE']
-}
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     origin: `*`,
+//     methods:['GET', 'PUT', 'POST', 'DELETE']
+// }
+// app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({ secret: 'THIS IS ALL A SIMULATION?', cookie: { maxAge: 60000 }}))
