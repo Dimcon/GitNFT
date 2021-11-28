@@ -1,7 +1,7 @@
 {
-  "name": "bilbaard-api",
+  "name": "git-nft",
   "version": "1.0.0",
-  "description": "Bilbaard's accompanying API",
+  "description": "GitNFT's accompanying API",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
