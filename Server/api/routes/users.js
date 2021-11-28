@@ -8,6 +8,10 @@ const config = require("../config/database");
 
 const User = require("../models/user");
 
+
+const Repo = require("../models/repo");
+const NFT = require("../models/nft");
+
 // Authentication routes
 // Register a new user
 router.post("/register", (req, res, next) => {
@@ -23,6 +27,34 @@ router.post("/register", (req, res, next) => {
     if (err) {
       res.status(401).send("Invalid username or password");
     } else {
+      for (let i = 0; i < 7;i++) {
+        Repo.addRepo(
+          new Repo({
+            userId: newUser._id,
+            repoName: `ReactApp-${i}`,
+            githubId: 'none',
+            GithubToken: 'none'
+          }),
+          (err, repo) => {
+            if (err) {
+              // res.status(401).send("Repository could not be saved");
+            } else {
+              // res.json({ success: true, msg: "Repository created." });
+            }
+          });
+        NFT.addNFT(
+            new NFT({
+              userId: user._id,
+              nftToken: 'none'
+            }),
+            (err, nft) => {
+              if (err) {
+                // res.status(401).send("NFT could not be saved");
+              } else {
+                // res.json({ success: true, msg: "NFT created." });
+              }
+            });
+      }
       res.json({ success: true, msg: "User registered" });
     }
   });
