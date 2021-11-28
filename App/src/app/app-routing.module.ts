@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
   },
   {
+    path: 'register-github',
+    loadChildren: () => import('./pages/register-github/register-github.module').then(m => m.RegisterGithubPageModule)
+  },
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
@@ -27,6 +31,11 @@ const routes: Routes = [
     path: 'gits',
     loadChildren: () => import('./pages/gits/gits.module').then(m => m.GitsPageModule)
   },
+  {
+    path: 'register-github',
+    loadChildren: () => import('./pages/register-github/register-github.module').then( m => m.RegisterGithubPageModule)
+  },
+
 
 ];
 @NgModule({

@@ -18,8 +18,8 @@ export class RegisterPage implements OnInit {
 
   ngOnInit(): void {
     this.utilService.user = null;
-    if(this.authService.isLoggedIn()) {
-      this.router.navigate(['dashboard'])
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['register-github']);
     }
   }
 
@@ -34,7 +34,6 @@ export class RegisterPage implements OnInit {
   async registerUser(isAdmin = false) {
     this.error = null;
     this.passerror = null;
-    debugger;
     try {
       let res = /^[a-zA-Z0-9_\.]{6,}$/.exec(this.email);
       let valid = !!res;
@@ -68,7 +67,7 @@ export class RegisterPage implements OnInit {
           this.password
         );
       }
-      await this.router.navigateByUrl('dashboard');
+      await this.router.navigateByUrl('register-github');
     } catch (err) {
       this.error = err;
     }
@@ -77,10 +76,4 @@ export class RegisterPage implements OnInit {
   goToLogin() {
     this.router.navigateByUrl('login');
   }
-
-  /*register(form){
-    this.authService.register(form.value).subscribe((res) =>{
-      this.router.navigateByUrl('home');
-    });
-  }*/
 }

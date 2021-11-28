@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UtilityServiceService} from "../../services/utility-service.service";
 
 @Component({
   selector: 'app-gits',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GitsPage implements OnInit {
 
-  constructor() { }
+  repos: any[];
 
-  ngOnInit() {
+  constructor(
+    private utilityService: UtilityServiceService
+  ) { }
+
+  async ngOnInit() {
+    this.repos = await this.utilityService.getRepos();
   }
 
 }

@@ -3,56 +3,64 @@ import { HttpServiceService } from './http-service.service';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
 
-const baseUrl =environment.apiUrl
+const baseUrl =environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityServiceService {
 
-  public user: any =null;
+  public repo: any =null;
+  public nft: any = null;
+  public user: any = null;
+  public githubInstallationBaseUrl = 'https://github.com/apps/gitnftapp/installations/new?state=';
+
 
   constructor(
     private httpService: HttpServiceService,
   ) { }
 
-  async createRepo(text: string){
-    await this.httpService.post(baseUrl + '/gits/createRepo',{
-      userId: this.user.id,
-      text: text
+  githubInstallUrl() {
+    return this.githubInstallationBaseUrl + this.user?.id;
+  }
+
+  async createRepo(repoName: string){
+    await this.httpService.post(baseUrl + '/addRepo',{
+      id: this.repo.id,
+      repoName: repoName
     })
   }
 
   async deleteRepo(repoId: string) {
-    await this.httpService.post(baseUrl + '/gits/deleteRepo',
+    await this.httpService.post(baseUrl + '/deleteRepo',
       {
-        userId: this.user.id,
-        postId: repoId
+        id: this.repo.id,
+        repoId: repoId
       })
   }
 
   async getRepos() {
-    const result = await this.httpService.get(baseUrl + '/gits/repos')
-    return result
+    const result = await this.httpService.get(baseUrl + '/github/getRepos')
+    return result.repos
   }
 
-  async createNFT(text: string){
-    await this.httpService.post(baseUrl + '/nfts/createNFT',{
-      userId: this.user.id,
-      text: text
+  async createNFT(nftToken: string){
+    await this.httpService.post(baseUrl + '/addNFT',{
+      id: this.nft.id,
+      nftToken: nftToken
     })
   }
 
-  async deleteNFT(nftId: string) {
-    await this.httpService.post(baseUrl + '/nfts/deleteNFT',
+  async deleteNFT(nftToken: string) {
+    await this.httpService.post(baseUrl + '/deleteNFT',
       {
-        userId: this.user.id,
-        postId: nftId
+        id: this.nft.id,
+        nftToken: nftToken
       })
   }
 
   async getNFTs() {
-    const result = await this.httpService.get(baseUrl + '/nfts/NFTs')
-    return result
+    const result = await this.httpService.get(baseUrl + '/nft/getNFTs')
+    return result.nft
   }
 }
