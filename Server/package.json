@@ -26,7 +26,7 @@
     "passport-jwt": "*",
     "session": "^0.1.0"
   },
-  "author": "Daimon Sewell",
+  "author": "WIL TEAM",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.2"
