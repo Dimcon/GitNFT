@@ -4,6 +4,7 @@ import {Platform} from '@ionic/angular';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {AuthService} from "./services/auth.service";
+import {UtilityServiceService} from "./services/utility-service.service";
 
 @Component({
   selector: 'app-root',
@@ -43,6 +44,7 @@ export class AppComponent {
     private statusbar: StatusBar,
     private splashscreen: SplashScreen,
     private authService: AuthService,
+    private utilService: UtilityServiceService,
   ) {
     this.initializeApp();
   }

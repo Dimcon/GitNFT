@@ -61,6 +61,7 @@ export class AuthService {
   }
 
   public isLoggedIn() {
+    debugger;
     const userjs = localStorage.getItem('user');
     this.httpService.setAuthToken(this.getAuthToken() || '');
     this.utilityService.user = JSON.parse(userjs || '{}');

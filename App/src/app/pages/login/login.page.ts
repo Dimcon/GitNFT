@@ -33,14 +33,14 @@ export class LoginPage implements OnInit {
     this.error = null;
     try {
       await this.authService.login(this.username, this.password);
-      await this.router.navigateByUrl('dashboard');
+      await this.router.navigateByUrl('gits');
     } catch(err) {
       this.error = err;
     }
   }
 
   async goToRegistration(){
-    await this.router.navigateByUrl('register');
+    await this.router.navigateByUrl('gits');
   }
 
   /*login(form){

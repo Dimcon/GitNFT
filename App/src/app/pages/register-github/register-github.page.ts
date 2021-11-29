@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UtilityServiceService} from "../../services/utility-service.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-register-github',
@@ -11,11 +12,16 @@ export class RegisterGithubPage implements OnInit {
   githubInstallUrl: string;
 
   constructor(
-    private utilityService: UtilityServiceService
+    private utilityService: UtilityServiceService,
+    private authService: AuthService
+
   ) { }
 
   ngOnInit() {
-    this.githubInstallUrl = this.utilityService.githubInstallUrl()
+    debugger;
+    if (this.authService.isLoggedIn()) {
+      this.githubInstallUrl = this.utilityService.githubInstallUrl()
+    }
   }
 
 }

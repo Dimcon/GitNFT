@@ -21,6 +21,7 @@ export class UtilityServiceService {
   ) { }
 
   githubInstallUrl() {
+    debugger;
     return this.githubInstallationBaseUrl + this.user?.id;
   }
 
