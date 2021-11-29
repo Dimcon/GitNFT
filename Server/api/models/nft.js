@@ -11,6 +11,10 @@ const NFTSchema = mongoose.Schema({
     nftToken: {
         type: String,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true
     }
 
 });
@@ -18,7 +22,6 @@ const NFTSchema = mongoose.Schema({
 const Repo = module.exports = mongoose.model('NFT', NFTSchema);
 
 
-// https://www.npmjs.com/package/bcrypt
 
 module.exports.getNFTById = function(id, callback) {
     Repo.findById(id, callback);

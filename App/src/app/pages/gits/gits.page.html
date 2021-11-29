@@ -18,13 +18,13 @@
       <div class="d-flex align-items-center">
         <div class="bg-info rounded-circle ml-1 mr-4" style="width: 1.5rem; height: 1.5rem">&nbsp;</div>
         <div>
-          <div class="">{{repo.repoName}}</div>
-          <div class="small text-secondary">{{repo.githubId}}</div>
+          <div class="">{{repo.name}}</div>
+          <div class="small text-secondary">{{repo.userKey}}</div>
         </div>
       </div>
       <div>
-        <div class="">17:00</div>
-        <div class="small text-secondary">21/10/2021</div>
+        <div class="">{{repo.createdAt | date:'shortTime' }}</div>
+        <div class="small text-secondary">{{repo.createdAt | date:'fullDate' }}</div>
       </div>
     </a>
   </div>

@@ -3,11 +3,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 // Mongoose User schema
-const RepoSchema = mongoose.Schema({
-    userId: {
-        type: String,
-        required: true
-    },
+const GithubInstallationSchema = mongoose.Schema({
     installationId: {
         type: String,
         required: true
@@ -16,30 +12,21 @@ const RepoSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    repoId: {
+    userId: {
         type: String,
         required: true
     },
-    name: {
+    accessTokenUrl: {
         type: String,
-        required: true
-    },
-    url: {
-        type: String,
-        required: true
-    },
-    isPrivate: {
-        type: Boolean,
         required: true
     },
     createdAt: {
         type: Date,
         required: true
     }
-
 });
 
-const Repo = module.exports = mongoose.model('Repo', RepoSchema);
+const Repo = module.exports = mongoose.model('GithubInstallation', GithubInstallationSchema);
 
 
 module.exports.getRepoById = function(id, callback) {

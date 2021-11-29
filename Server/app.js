@@ -43,6 +43,9 @@ app.use(session({ secret: 'THIS IS ALL A SIMULATION?', cookie: { maxAge: 60000 }
 app.use(bodyParser.json({ extended: false }))
 app.use(cookieParser());
 // (XSRF Protection with Angular and Express, 2021)
+// Disable csrf for this routes
+const github = require('./api/routes/github');
+app.use('/api/github', github);
 app.use(csurf({ cookie: true }));
 
 
@@ -81,12 +84,10 @@ require('./api/config/passport')(passport);
 
 const users = require('./api/routes/users');
 const nft = require('./api/routes/nft');
-const github = require('./api/routes/github');
 
 // Include our base route handlers
 app.use('/api/auth', users);
 app.use('/api/nft', nft);
-app.use('/api/github', github);
 
 const port = process.env.PORT || 3000;
 
