@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UtilityServiceService} from '../../services/utility-service.service';
 
 @Component({
   selector: 'app-nfts',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NftsPage implements OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
+  nfts: any[];
+
+  constructor(
+    private utilityService: UtilityServiceService
+  ) { }
+
+  async ngOnInit() {
+    this.nfts = await this.utilityService.getNFTs();
   }
 
 }

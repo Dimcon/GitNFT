@@ -11,7 +11,7 @@ const csurf = require('csurf');
 const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const https = require('https')
+// const https = require('https')
 const config = require('./api/config/database');
 const helmet = require("helmet")
 const morgan = require("morgan")
@@ -32,11 +32,11 @@ app.use(
 
 
 // Use all the middlewares we'll be needing.
-// const corsOptions = {
-//     origin: `*`,
-//     methods:['GET', 'PUT', 'POST', 'DELETE']
-// }
-// app.use(cors(corsOptions));
+const corsOptions = {
+    origin: `*`,
+    methods:['GET', 'PUT', 'POST', 'DELETE']
+}
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({ secret: 'THIS IS ALL A SIMULATION?', cookie: { maxAge: 60000 }}))
@@ -71,22 +71,24 @@ require('./api/config/passport')(passport);
 
 // (morgan, 2021)
 // create a write stream (in append mode)
-const  accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
+// const  accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
 
-app.use(morgan('combined', {stream: accessLogStream}))
+// app.use(morgan('combined', {stream: accessLogStream}))
 
 
 
 
 
 const users = require('./api/routes/users');
-const posts = require('./api/routes/psots');
+const nft = require('./api/routes/nft');
+const github = require('./api/routes/github');
 
 // Include our base route handlers
 app.use('/api/auth', users);
-app.use('/api/posts', posts);
+app.use('/api/nft', nft);
+app.use('/api/github', github);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 
 // Connect to mongoose database using our configs
@@ -99,13 +101,17 @@ mongoose.connection.on('error', (err) => {
     console.log('Database error ' + err);
 });
 
-https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-}, app).listen(port, () => {
-    console.log('Server started on port: ' + port);
-});
 
-// app.listen(port, () => {
-//     console.log('Server started on port: ' + port);
-// });
+if (process.env.PORT || true) {
+    app.listen(port, () => {
+        console.log('Server started on port: ' + port);
+    });
+} else {
+    https.createServer({
+        key: fs.readFileSync('server.key'),
+        cert: fs.readFileSync('server.cert')
+    }, app).listen(port, () => {
+        console.log('Server started on port: ' + port);
+    });
+}
+

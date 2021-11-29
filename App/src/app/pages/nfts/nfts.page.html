@@ -7,8 +7,25 @@
   </ion-toolbar>
 </ion-header>
 
-<div class="bg-dark h-100 align-items-center">
-  <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action shadow p-3 mb-5 bg-body rounded mx-auto">Placeholder</a>
+<div style="background: #2a2a2a" class="h-100 align-items-center scrollable">
+  <div class="list-group my-3 mx-3">
+    <a href="#" *ngFor="let nft of nfts"
+       style="background: #363636"
+       class="list-group-item list-group-item-action
+            rounded my-1 text-light d-flex ion-justify-content-between
+            align-items-center
+        ">
+      <div class="d-flex align-items-center">
+        <div class="bg-info rounded-circle ml-1 mr-4" style="width: 1.5rem; height: 1.5rem">&nbsp;</div>
+        <div>
+          <div class="">{{nft.nftToken}}</div>
+          <div class="small text-secondary">Commit sdfsdifbu</div>
+        </div>
+      </div>
+      <div>
+        <div class="">17:00</div>
+        <div class="small text-secondary">21/10/2021</div>
+      </div>
+    </a>
   </div>
 </div>

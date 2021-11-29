@@ -4,10 +4,6 @@ const config = require('../config/database');
 
 
 const NFTSchema = mongoose.Schema({
-    id: {
-        type: String,
-        required: true
-    },
     userId: {
         type: String,
         required: true

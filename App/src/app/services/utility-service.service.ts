@@ -3,7 +3,7 @@ import { HttpServiceService } from './http-service.service';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
 
-const baseUrl =environment.apiUrl
+const baseUrl =environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,16 @@ export class UtilityServiceService {
   public repo: any =null;
   public nft: any = null;
   public user: any = null;
+  public githubInstallationBaseUrl = 'https://github.com/apps/gitnftapp/installations/new?state=';
+
 
   constructor(
     private httpService: HttpServiceService,
   ) { }
+
+  githubInstallUrl() {
+    return this.githubInstallationBaseUrl + this.user?.id;
+  }
 
   async createRepo(repoName: string){
     await this.httpService.post(baseUrl + '/addRepo',{
@@ -34,8 +40,8 @@ export class UtilityServiceService {
   }
 
   async getRepos() {
-    const result = await this.httpService.get(baseUrl + '/getRepos')
-    return result
+    const result = await this.httpService.get(baseUrl + '/github/getRepos')
+    return result.repos
   }
 
   async createNFT(nftToken: string){
@@ -54,7 +60,7 @@ export class UtilityServiceService {
   }
 
   async getNFTs() {
-    const result = await this.httpService.get(baseUrl + '/getNFTs')
-    return result
+    const result = await this.httpService.get(baseUrl + '/nft/getNFTs')
+    return result.nft
   }
 }
