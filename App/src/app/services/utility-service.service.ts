@@ -12,6 +12,7 @@ export class UtilityServiceService {
 
   public repo: any =null;
   public nft: any = null;
+  public user: any = null;
 
   constructor(
     private httpService: HttpServiceService,
