@@ -19,16 +19,19 @@ const NFTSchema = mongoose.Schema({
 
 });
 
-const Repo = module.exports = mongoose.model('NFT', NFTSchema);
-
-
+const NFT = module.exports = mongoose.model('NFT', NFTSchema);
 
 module.exports.getNFTById = function(id, callback) {
-    Repo.findById(id, callback);
+    NFT.findById(id, callback);
 }
 
-module.exports.getNFTs = function(callback) {
-    Repo.find({}, callback);
+
+module.exports.getNFTByUserId = function(id, callback) {
+    NFT.find({}, callback);
+}
+
+module.exports.getNFTs = function(userId, callback) {
+    NFT.find({ "userId": userId}, callback);
 }
 
 module.exports.addNFT = function(newNFT, callback) {

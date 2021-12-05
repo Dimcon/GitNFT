@@ -17,6 +17,9 @@ const helmet = require("helmet")
 const morgan = require("morgan")
 const fs = require('fs')
 const session = require('express-session')
+const jwtVerify = require('jsonwebtoken')
+
+const User = require("./api/models/user");
 
 
 
@@ -44,8 +47,27 @@ app.use(bodyParser.json({ extended: false }))
 app.use(cookieParser());
 // (XSRF Protection with Angular and Express, 2021)
 // Disable csrf for this routes
+
+
 const github = require('./api/routes/github');
+const nft = require('./api/routes/nft');
+const users = require('./api/routes/users');
+
+
+app.use('/api/auth', users);
+
+
+app.use(async function(req, res, next) {
+    const userId = req.header('X-UserId')
+    if (userId) {
+        req.user = await User.findById(userId)
+    }
+    return next();
+});
+
 app.use('/api/github', github);
+app.use('/api/nft', nft);
+
 app.use(csurf({ cookie: true }));
 
 
@@ -56,6 +78,8 @@ app.use(function(req, res, next) {
     res.locals.csrfToken = xsrf;
     return next();
 });
+
+
 // This view is important. Allows angular to do a GET request where it can get the CSRF from.
 // Figured this out after lots of testing.
 app.get('/api/csrf', (req, res) => {
@@ -82,12 +106,17 @@ require('./api/config/passport')(passport);
 
 
 
-const users = require('./api/routes/users');
-const nft = require('./api/routes/nft');
 
 // Include our base route handlers
-app.use('/api/auth', users);
-app.use('/api/nft', nft);
+app.use(function(req, res, next) {
+    const xsrf = req.csrfToken()
+    const authHeader = req.header("Authorization")
+    if (!authHeader) {
+        return res.status(401).send("This request is missing Authorization header.");
+    }
+    const bearerToken = req.get("Authorization").replace("Bearer ", "")
+    return next();
+});
 
 const port = process.env.PORT || 3000;
 

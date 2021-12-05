@@ -39,16 +39,21 @@ const RepoSchema = mongoose.Schema({
 
 });
 
-const Repo = module.exports = mongoose.model('Repo', RepoSchema);
+const REPO = module.exports = mongoose.model('Repo', RepoSchema);
 
 
 module.exports.getRepoById = function(id, callback) {
-    Repo.findById(id, callback);
+    REPO.findById(id, callback);
 }
 
 module.exports.getRepos = function(callback) {
-    Repo.find({}, callback);
+    REPO.find({}, callback);
 }
+
+module.exports.getReposByUserId = function(userId, callback) {
+    REPO.find({ "userId": userId}, callback);
+}
+
 
 module.exports.addRepo = function(newRepo, callback) {
     newRepo.save(callback)

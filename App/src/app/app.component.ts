@@ -33,6 +33,11 @@ export class AppComponent {
       icon: 'logo-web-component'
     },
     {
+      title: 'My Github',
+      url: '/register-github',
+      icon: 'logo-github'
+    },
+    {
       title: 'Logout',
       url: '/login',
       icon: 'person'

@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
   }
 
   async goToRegistration(){
-    await this.router.navigateByUrl('gits');
+    await this.router.navigateByUrl('register');
   }
 
   /*login(form){

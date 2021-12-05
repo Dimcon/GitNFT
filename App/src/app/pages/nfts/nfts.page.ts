@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UtilityServiceService} from '../../services/utility-service.service';
+import {AuthService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-nfts',
@@ -12,11 +14,17 @@ export class NftsPage implements OnInit {
   nfts: any[];
 
   constructor(
-    private utilityService: UtilityServiceService
+    private authService: AuthService,
+    private utilityService: UtilityServiceService,
+    private router: Router
   ) { }
 
   async ngOnInit() {
-    this.nfts = await this.utilityService.getNFTs();
+    if (!this.authService.isLoggedIn()) {
+      await this.router.navigate(['login']);
+    } else {
+      this.nfts = await this.utilityService.getNFTs();
+    }
   }
 
 }
