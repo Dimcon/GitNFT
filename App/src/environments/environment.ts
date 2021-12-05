@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: '/api',
-  production: false
+  apiUrl: 'https://gitnft-turiiz.codecapsules.co.za/api',
+  production: true
 };
 
 /*
