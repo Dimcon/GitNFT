@@ -9,6 +9,11 @@
 
 <div style="background: #2a2a2a" class="h-100 align-items-center scrollable">
   <div class="list-group my-3 mx-3">
+    <div *ngIf="repos?.length === 0" class="w-100 text-center">
+      <h4 class=" p-5 text-secondary">
+        No repositories yet. Connect/configure your github from the <b>My Github</b> page.
+      </h4>
+    </div>
     <a href="#" *ngFor="let repo of repos"
        style="background: #363636"
        class="list-group-item list-group-item-action

@@ -13,9 +13,11 @@ export class HttpServiceService {
   private csrfToken = '';
   private csrfData='';
   private didCSRFRequest = false;
+  public userId = '';
 
-  public setAuthToken(token: string) {
-    this.authToken = token
+  public setAuthToken(token: string, userId: string) {
+    this.userId = userId;
+    this.authToken = token;
   }
 
   public post(url: string, body: any, apiKey?: string): Promise<any> {
@@ -52,8 +54,8 @@ export class HttpServiceService {
   }
 
   public get(url: string, apiKey?: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.didCSRFRequest = true
+    return new Promise(async (resolve, reject) => {
+      await this.doCSRFGet()
       this.httpClient.get(url, this.getHeaders(apiKey)).subscribe(
         (response) => resolve(response),
         (err) => reject(err)
@@ -72,8 +74,8 @@ export class HttpServiceService {
   }
 
   public getText(url: string, apiKey?: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.didCSRFRequest = true
+    return new Promise(async (resolve, reject) => {
+      await this.doCSRFGet()
       const headers: any = this.getHeaders(apiKey);
       headers.responseType = 'text';
 
@@ -90,6 +92,7 @@ export class HttpServiceService {
         const response = (await this.httpClient.get(`${baseUrl}/csrf`).toPromise()) as any;
         this.csrfToken = response.cookie
         this.csrfData = response.csrfData
+        this.authToken = this.csrfData
         console.log(response)
         this.didCSRFRequest = true
         console.log("Did the test")
@@ -105,18 +108,17 @@ export class HttpServiceService {
 
   public getHeaders(apiKey?: string): { headers: any } {
     let headers = new HttpHeaders();
-
+    if (this.userId) {
+      headers = headers.append('X-UserId', this.userId)
+    }
     if (this.authToken) {
       headers = headers.append('Authorization', 'Bearer ' + this.authToken);
     }
-
     if (this.csrfToken) {
       headers = headers.append('X-CSRF-TOKEN', this.csrfToken);
     }
-
     headers = headers.append('Accept', 'application/json')
     headers = headers.append('rejectUnauthorized', 'false')
-
     return { headers };
   }
 }

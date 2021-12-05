@@ -1,10 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="true"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Github</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <div class="bg-dark py-5 h-100 d-flex align-items-center justify-content-center flex-column">
   <div class="w-100 d-flex flex-column justify-content-between h-100">
     <div class="px-5 w-100">
+      <div class="pv-5 text-center w-100 text-light">
+        <div *ngIf="repos?.length > 0" class="h3">
+          Github Connected.
+        </div>
+        <div *ngIf="!(repos?.length > 0)" class="h3">
+          Connect your Github account to continue.
+        </div>
+        <a *ngIf="repos?.length > 0" [routerLink]="['/', 'gits']" class="btn btn-success">Go to Repos</a>
+      </div>
     </div>
     <div class="w-100 px-5">
       <hr>
-      <a target="_blank" [href]="githubInstallUrl" class="btn btn-secondary m-2 w-100">Connect Github</a>
+      <a *ngIf="repos?.length > 0" target="_blank" [href]="githubInstallUrl" class="btn btn-secondary m-2 w-100">Configure Github</a>
+      <a *ngIf="!(repos?.length > 0)" target="_blank" [href]="githubInstallUrl" class="btn btn-primary m-2 w-100">Connect Github</a>
     </div>
   </div>
 </div>

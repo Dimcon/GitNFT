@@ -24,8 +24,9 @@ export class AuthService {
       password: pass
     });
     if (result.success) {
-      this.httpService.setAuthToken(result.token);
+      this.httpService.setAuthToken(result.token, result.user.id);
       this.utilityService.user = result.user;
+      this.httpService.userId = this.utilityService.user.id;
       const expiresAt = moment().add(result.expiresIn, 'second');
       localStorage.setItem('jwt_token', result.token);
       localStorage.setItem('user', JSON.stringify(result.user));
@@ -43,6 +44,7 @@ export class AuthService {
     localStorage.removeItem('jwt_token');
     localStorage.removeItem('user');
     localStorage.removeItem('expires_at');
+    this.httpService.userId = '';
   }
 
   async register(username: string, email: string, pass: string) {
@@ -61,10 +63,10 @@ export class AuthService {
   }
 
   public isLoggedIn() {
-    debugger;
     const userjs = localStorage.getItem('user');
-    this.httpService.setAuthToken(this.getAuthToken() || '');
     this.utilityService.user = JSON.parse(userjs || '{}');
+    this.httpService.setAuthToken(this.getAuthToken() || '', this.utilityService.user.id);
+    this.httpService.userId = this.utilityService.user.id;
     return moment().isBefore(this.getExpiration());
   }
 

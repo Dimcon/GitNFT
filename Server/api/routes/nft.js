@@ -38,7 +38,7 @@ router.get(
     "/getNFTs",
     // passport.authenticate("jwt", { session: false }),
     (req, res, next) => {
-        NFT.getNFTs((err, nft) => {
+        NFT.getNFTs(req.user.id, (err, nft) => {
             res.json({ nft: nft });
         })
     }
