@@ -55,6 +55,11 @@ module.exports.getReposByUserId = function(userId, callback) {
 }
 
 
+module.exports.getReposByInstallationId = function(installationId, callback) {
+    REPO.find({ "installationId": installationId}, callback);
+}
+
+
 module.exports.addRepo = function(newRepo, callback) {
     newRepo.save(callback)
 }

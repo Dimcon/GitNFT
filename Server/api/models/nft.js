@@ -12,6 +12,10 @@ const NFTSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    repoId: {
+        type: String,
+        required: true
+    },
     createdAt: {
         type: Date,
         required: true
@@ -28,6 +32,10 @@ module.exports.getNFTById = function(id, callback) {
 
 module.exports.getNFTByUserId = function(id, callback) {
     NFT.find({}, callback);
+}
+
+module.exports.getNFTByRepoId = function(id, callback) {
+    NFT.find({"repoId": id}, callback);
 }
 
 module.exports.getNFTs = function(userId, callback) {

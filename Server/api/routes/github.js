@@ -49,6 +49,23 @@ router.get(
 
 router.get("/redirect", async (req, res, next) => {
     console.log('redirect')
+    await new Promise((resolve, reject) => {
+        setTimeout(resolve, 5000)
+    })
+    Repo.getReposByInstallationId(req.query.installation_id, async function (err, repos) {
+        for (let repo of repos) {
+            repo.userId = req.query.state
+            await repo.save()
+            NFT.getNFTByRepoId(repo.id, async function (err, nfts) {
+                for (let nft of nfts) {
+                    nft.userId = req.query.state
+                    await nft.save()
+                }
+            })
+        }
+        return res.redirect("/repos");
+    })
+    // const repos = Repo.find()
     // const request = new GithubInstallationRequest(req.query);
     //
     // if (request.setupAction === "install") {
@@ -79,7 +96,7 @@ router.post("/webhook", async (req, res, next) => {
                 const repos = req.body.repositories
                 for (const repo of repos) {
                     const dbRepo = new Repo({
-                        userId: '61a51118e894262bf84d112e',
+                        userId: 'null',
                         userKey:  req.body.installation.account.login,
                         repoId: repo.id,
                         name: repo.full_name,
@@ -90,16 +107,30 @@ router.post("/webhook", async (req, res, next) => {
                     })
                     await dbRepo.save();
                     const dbNft = new NFT({
-                        userId: '61a51118e894262bf84d112e',
-                        nftToken: dbRepo.name
+                        userId: 'null',
+                        repoId: dbRepo.id,
+                        nftToken: dbRepo.name,
+                        createdAt: new Date()
                     })
                     await dbNft.save();
                 }
-                return res.json(new ApiResponse({ status: "Successfully created" }));
+                return res.json({ status: "Successfully created" });
             }
             case "deleted": {
                 // TODO: Delete github repo
-                return res.json(new ApiResponse({ status: "Successfully deleted" }));
+                Repo.getReposByInstallationId(req.query.installation_id, async function (err, repos) {
+                    for (let repo of repos) {
+                        repo.userId = req.query.state
+                        await repo.remove()
+                        // NFT.getNFTByRepoId(repo.id, function (err, nfts) {
+                        //     for (let nft of nfts) {
+                        //         nft.userId = req.query.state
+                        //         // nft.remove()
+                        //     }
+                        // })
+                    }
+                })
+                return res.json({ status: "Successfully deleted" });
             }
             default: {
                 return res.status(405).send("request error");
