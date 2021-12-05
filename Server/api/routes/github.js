@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/database");
 
 const Repo = require("../models/repo");
+const NFT = require("../models/nft");
 // const {GithubInstallationRequest} = require("../dto/github-installation-request");
 // const githubUtil = new (require("../services/github-util"))
 
@@ -40,7 +41,7 @@ router.get(
     "/getRepos",
     // passport.authenticate("jwt", { session: false }),
     (req, res, next) => {
-        Repo.getRepos((err, repos) => {
+        Repo.getReposByUserId(req.user.id, (err, repos) => {
             res.json({ repos: repos });
         })
     }
@@ -53,7 +54,7 @@ router.get("/redirect", async (req, res, next) => {
     // if (request.setupAction === "install") {
     //     try {
     //         await githubUtil.authenticateApplication(request);
-    //         res.redirect("https://codecapsules.io/teams");
+    //         res.redirect("https://");
     //         return;
     //     } catch (error) {
     //         httpUtil.handleError(error, res);
@@ -87,28 +88,21 @@ router.post("/webhook", async (req, res, next) => {
                         installationId: req.body.installation.id,
                         createdAt: new Date()
                     })
-                    dbRepo.save();
+                    await dbRepo.save();
+                    const dbNft = new NFT({
+                        userId: '61a51118e894262bf84d112e',
+                        nftToken: dbRepo.name
+                    })
+                    await dbNft.save();
                 }
-                // const githubInstallation = await githubUtil.createGithubInstallation(
-                //     req.body.installation.id,
-                //     req.body.installation.account.id,
-                //     req.body.installation.access_tokens_url
-                // );
-                // await githubUtil.createGithubRepos(githubInstallation, req.body);
-                // return res.json(new ApiResponse({ status: "Successfully created" }));
+                return res.json(new ApiResponse({ status: "Successfully created" }));
             }
             case "deleted": {
-                // githubUtil.deleteApplication(req.body);
-                // return res.json(new ApiResponse({ status: "Successfully deleted" }));
+                // TODO: Delete github repo
+                return res.json(new ApiResponse({ status: "Successfully deleted" }));
             }
             default: {
-                // httpUtil.handleError(
-                //     new Error400(
-                //         `We do not have an implementation for installation event, ${req.body.action}`
-                //     ),
-                //     res
-                // );
-                return;
+                return res.status(405).send("request error");
             }
         }
         return;
@@ -146,24 +140,6 @@ router.post("/webhook", async (req, res, next) => {
         });
         // -> FOR
         for (const cluster of clusters) {
-            const clusterApiToken = sign(
-                {
-                    id: "code-caps-api",
-                },
-                config.clusterApiTokenSecret
-            );
-            Axios.post(
-                `${cluster.clusterApiEndpoint}/gitpush/webhook`,
-                {
-                    repoUrl: req.body.repository.html_url, // also try html_url.
-                    branch,
-                },
-                {
-                    headers: {
-                        "x-api-token": clusterApiToken,
-                    },
-                }
-            );
         }
     }
 

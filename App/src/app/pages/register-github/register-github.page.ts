@@ -10,6 +10,7 @@ import {AuthService} from "../../services/auth.service";
 export class RegisterGithubPage implements OnInit {
 
   githubInstallUrl: string;
+  repos: [];
 
   constructor(
     private utilityService: UtilityServiceService,
@@ -17,10 +18,11 @@ export class RegisterGithubPage implements OnInit {
 
   ) { }
 
-  ngOnInit() {
-    debugger;
+  async ngOnInit() {
     if (this.authService.isLoggedIn()) {
-      this.githubInstallUrl = this.utilityService.githubInstallUrl()
+      this.githubInstallUrl = this.utilityService.githubInstallUrl();
+      this.repos = await this.utilityService.getRepos();
+    } else {
     }
   }
 

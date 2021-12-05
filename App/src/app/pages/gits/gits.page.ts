@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UtilityServiceService} from "../../services/utility-service.service";
+import {AuthService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-gits',
@@ -11,11 +13,17 @@ export class GitsPage implements OnInit {
   repos: any[];
 
   constructor(
-    private utilityService: UtilityServiceService
+    private authService: AuthService,
+    private utilityService: UtilityServiceService,
+    private router: Router
   ) { }
 
   async ngOnInit() {
-    this.repos = await this.utilityService.getRepos();
+    if (!this.authService.isLoggedIn()) {
+      await this.router.navigate(['login']);
+    } else {
+      this.repos = await this.utilityService.getRepos();
+    }
   }
 
 }
