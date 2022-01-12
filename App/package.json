@@ -1,9 +1,6 @@
 {
   "name": "App",
   "version": "0.0.1",
-  "engines": {
-    "node": "v17.3.1"
-  },
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
